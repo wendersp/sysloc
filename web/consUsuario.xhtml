@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h1>Pesquisar de Usuario</h1>        
+        <h:form>
+            <p:panelGrid columns="1">
+                <p:commandButton value="Novo" action="cadUsuario?faces-redirect=true"/>
+            </p:panelGrid>
+            <p:panelGrid columns="3">
+                <p:outputLabel for="iTxtPesquisar" value="Pesquisar"/>
+                <p:inputText id="iTxtPesquisar" size="50" maxlength="50" />
+                <p:commandButton id="cBtnPesquisar" value="Pesquisar"/>
+            </p:panelGrid>
+            <p:panelGrid columns="1">
+                <p:dataTable  rows="10"
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                             rowsPerPageTemplate="5,10,15">
+                    <p:column headerText="Id">
+                        <h:outputText value="01" />
+                    </p:column>
+
+                    <p:column headerText="Nome">
+                        <h:outputText value="Wender da Silva Paula" />
+                    </p:column>
+
+                    <p:column headerText="E-mail">
+                        <h:outputText value="wendersp@gmail.com" />
+                    </p:column>
+
+                    <p:column headerText="Usuario">
+                        <h:outputText value="wender" />
+                    </p:column>
+
+                    <p:column headerText="Ações" >
+                        <p:commandButton style="margin-right:20px;" icon="pi pi-pencil" title="Editar"/>
+                        <p:commandButton style="margin-right:20px;" icon="fa fa-fw fa-remove" title="Excluir"/>
+                    </p:column>
+
+                    <f:facet name="paginatorTopLeft">
+                        <p:commandButton type="button" icon="pi pi-refresh" />
+                    </f:facet>
+
+                    <f:facet name="paginatorBottomRight">
+                        <p:commandButton type="button" icon="pi pi-cloud-upload" />
+                    </f:facet>
+
+                </p:dataTable>
+            </p:panelGrid>
+
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
