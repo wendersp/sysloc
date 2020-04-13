@@ -8,25 +8,28 @@
     <ui:define name="content">
         <h1>Cadastro de Usuario</h1>
         <br/>
-        <h:form>
-            <p:panelGrid columns="2">
+        <h:form id="form">
+            <p:panelGrid columns="2" styleClass="panelgrid-noborder">
                 <p:outputLabel for="iTxtId" value="Id"/>
-                <p:inputText id="iTxtId" size="10" readonly="true"/>
-                <p:outputLabel for="iTxtNome" value="Nome"/>
-                <p:inputText id="iTxtNome" size="50" maxlength="50" />
+                <p:inputText id="iTxtId" size="10" readonly="true" value="#{usuarioMBean.usuario.id}"/>
+                <p:outputLabel for="iTxtNome" value="Nome"/> 
+                <p:inputText id="iTxtNome" size="50" maxlength="50" value="#{usuarioMBean.usuario.nome}" />
                 <p:outputLabel for="iTxtEmail" value="E-mail"/>
-                <p:inputText id="iTxtEmail" size="50" maxlength="50" />
+                <p:inputText id="iTxtEmail" size="50" maxlength="50"  value="#{usuarioMBean.usuario.email}"/>
                 <p:outputLabel for="iTxtUsuario" value="Usuario"/>
-                <p:inputText id="iTxtUsuario" size="10" maxlength="10" />
+                <p:inputText id="iTxtUsuario" size="10" maxlength="10" value="#{usuarioMBean.usuario.userName}"/>
                 <p:outputLabel for="pwSenha" value="Senha"/>
-                <p:password id="pwSenha" size="10" maxlength="10" />
+                <p:password id="pwSenha" size="10" maxlength="10" value="#{usuarioMBean.usuario.senha}"/>
             </p:panelGrid>
             <br/>
-            <p:commandButton id="cBtnSalvar" value="Salvar"/>
+            <p:commandButton id="cBtnSalvar" value="Salvar" action="#{usuarioMBean.salvar()}" update="form"/>
 
             <p:commandButton id="cBtnPesquisar" value="Pesquisar" action="consUsuario?faces-redirect=true" ajax="false"/>
-
+            
         </h:form>
+
+
+
     </ui:define>
 
 </ui:composition>

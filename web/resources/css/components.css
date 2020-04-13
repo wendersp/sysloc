@@ -1,0 +1,10 @@
+.ui-datagrid.panelgrid-noborder {
+    border: none;
+}
+
+.ui-datagrid{
+    border: none !important;
+}  
+.ui-datagrid-content {
+    border: none !important;
+} 

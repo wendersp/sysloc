@@ -9,37 +9,47 @@
     <ui:define name="content">
         <h1>Pesquisar de Usuario</h1>        
         <h:form>
-            <p:panelGrid columns="1">
-                <p:commandButton value="Novo" action="cadUsuario?faces-redirect=true"/>
-            </p:panelGrid>
+
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton value="Novo" icon="fa fa-plus" action="#{usuarioMBean.botaoNovo()}" 
+                                     process="@this" style="width: auto"/>                         
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton value="Fechar" 
+                                     action="home" 
+                                     process="@this"  style="width: auto"/> 
+                </f:facet>                    
+            </p:toolbar>
             <p:panelGrid columns="3">
                 <p:outputLabel for="iTxtPesquisar" value="Pesquisar"/>
-                <p:inputText id="iTxtPesquisar" size="50" maxlength="50" />
-                <p:commandButton id="cBtnPesquisar" value="Pesquisar"/>
+                <p:inputText id="iTxtPesquisar" size="50" maxlength="50" value="#{usuarioMBean.dadosPesquisa}" />
+                <p:commandButton id="cBtnPesquisar" value="Pesquisar" action="#{usuarioMBean.botaoPesquisar()}" update="dtUsuario"/>
             </p:panelGrid>
-            <p:panelGrid columns="1">
-                <p:dataTable  rows="10"
-                             paginator="true"
-                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-                             rowsPerPageTemplate="5,10,15">
-                    <p:column headerText="Id">
-                        <h:outputText value="01" />
+            <p:panelGrid columns="1" >
+                <p:dataTable id="dtUsuario"  rows="10" paginatorPosition="top" value="#{usuarioMBean.listaUsuario}" var="usuario"
+                              paginator="true"
+                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                              currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                              rowsPerPageTemplate="5,10,15">
+                    
+                    <p:column headerText="Id" styleClass="col_codigo">
+                        <h:outputText value="#{usuario.id}" />                        
                     </p:column>
 
-                    <p:column headerText="Nome">
-                        <h:outputText value="Wender da Silva Paula" />
+                    <p:column headerText="Nome" styleClass="col_nome">
+                        <h:outputText value="#{usuario.nome}" />
                     </p:column>
 
-                    <p:column headerText="E-mail">
-                        <h:outputText value="wendersp@gmail.com" />
+                    <p:column headerText="E-mail" styleClass="col_nome">
+                        <h:outputText value="#{usuario.email}" />
                     </p:column>
 
-                    <p:column headerText="Usuario">
-                        <h:outputText value="wender" />
+                    <p:column headerText="Usuario" styleClass="col_120px">
+                        <h:outputText value="#{usuario.userName}" />
                     </p:column>
 
-                    <p:column headerText="Ações" >
+                    <p:column headerText="Ações" styleClass="col_opcoes">
                         <p:commandButton style="margin-right:20px;" icon="pi pi-pencil" title="Editar"/>
                         <p:commandButton style="margin-right:20px;" icon="fa fa-fw fa-remove" title="Excluir"/>
                     </p:column>
