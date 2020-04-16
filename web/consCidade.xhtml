@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+                
+        <h:form>            
+            <h:panelGrid>
+                <p:commandButton value="Novo Cidade" 
+                                 action="#{cidadeMBean.botaoNovo()}"/>
+            </h:panelGrid>
+            <h:panelGrid columns="3">                
+                Nome
+                <p:inputText size="20" value="#{cidadeMBean.valorPesquisar}"/>
+                <p:commandButton value="Pesquisar" action="#{cidadeMBean.botaoPesquisar()}" ajax="false"/>
+            </h:panelGrid>
+            
+            <h:panelGrid>
+
+                <p:dataTable id="dtCidade"  rows="10" paginatorPosition="top" value="#{cidadeMBean.listaCidade}" 
+                             var="cidade"   paginator="true"
+                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                              currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                              rowsPerPageTemplate="5,10,15">
+                    <p:column headerText="Id" styleClass="col_codigo">
+                        <h:outputText value="#{cidade.id}" />                        
+                    </p:column>
+                    <p:column headerText="Nome" styleClass="col_codigo">
+                        <h:outputText value="#{cidade.nome}" />                        
+                    </p:column>
+                   <p:column headerText="Estado" styleClass="col_codigo">
+                        <h:outputText value="#{cidade.estado}" />                        
+                    </p:column>
+                    <p:column headerText="Ações" styleClass="col_opcoes">
+                        <p:commandButton style="margin-right:20px;" icon="pi pi-pencil" title="Editar" action="#{cidadeMBean.botaoEditar()}">
+                            <f:setPropertyActionListener value="#{cidade}" target="#{cidadeMBean.cidade}"/>
+                        </p:commandButton>
+                        <p:commandButton style="margin-right:20px;" icon="fa fa-fw fa-remove" title="Excluir"/>
+                    </p:column>
+                    
+                   
+                </p:dataTable>
+            </h:panelGrid>
+            
+        </h:form>
+      </ui:define>
+
+</ui:composition>
