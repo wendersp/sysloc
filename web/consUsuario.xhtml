@@ -27,8 +27,8 @@
                 <p:commandButton id="cBtnPesquisar" value="Pesquisar" action="#{usuarioMBean.botaoPesquisar()}" update="dtUsuario"/>
             </p:panelGrid>
             <p:panelGrid columns="1" >
-                <p:dataTable id="dtUsuario"  rows="10" paginatorPosition="top" value="#{usuarioMBean.listaUsuario}" var="usuario"
-                              paginator="true"
+                <p:dataTable id="dtUsuario"  rows="10" paginatorPosition="top" value="#{usuarioMBean.listaUsuario}" 
+                             var="usuario"   paginator="true"
                               paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                               currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                               rowsPerPageTemplate="5,10,15">
@@ -50,12 +50,14 @@
                     </p:column>
 
                     <p:column headerText="Ações" styleClass="col_opcoes">
-                        <p:commandButton style="margin-right:20px;" icon="pi pi-pencil" title="Editar"/>
+                        <p:commandButton style="margin-right:20px;" icon="pi pi-pencil" title="Editar" action="#{usuarioMBean.botaoEditar()}">
+                             <f:setPropertyActionListener value="#{usuario}" target="#{usuarioMBean.usuario}"/>
+                        </p:commandButton>
                         <p:commandButton style="margin-right:20px;" icon="fa fa-fw fa-remove" title="Excluir"/>
                     </p:column>
 
                     <f:facet name="paginatorTopLeft">
-                        <p:commandButton type="button" icon="pi pi-refresh" />
+                        <p:commandButton type="button"  icon="pi pi-refresh"   />                                                    
                     </f:facet>
 
                     <f:facet name="paginatorBottomRight">

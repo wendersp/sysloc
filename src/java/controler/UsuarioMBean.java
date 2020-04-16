@@ -46,6 +46,10 @@ public class UsuarioMBean implements Serializable {
         usuario = new Usuario();
         return "cadUsuario";
     }
+    
+    public String botaoEditar() {        
+        return "cadUsuario";
+    }
 
     public String salvar() {
         usuarioSBean.salvar(usuario);
