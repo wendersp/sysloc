@@ -41,7 +41,7 @@ public class CidadeSessionBean {
         Query consulta = em.createNamedQuery("Cidade.findByNome");
         consulta.setParameter("nome", nome.toUpperCase() + "%");
         listaCidades = consulta.getResultList();
-        System.out.println("Cidades; " + listaCidades.size());
+       
         return listaCidades;
     }
 }

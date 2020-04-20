@@ -60,6 +60,10 @@ public class UsuarioMBean implements Serializable {
     public void botaoPesquisar() {
        listaUsuario = usuarioSBean.pesquisar(dadosPesquisa);        
     }
+    
+    public void botaoExcluir() {
+        usuarioSBean.excluir(usuario);
+    }
 
     public Usuario getUsuario() {
         return usuario;

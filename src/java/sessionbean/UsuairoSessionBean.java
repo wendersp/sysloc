@@ -27,7 +27,7 @@ public class UsuairoSessionBean {
     }
 
     public void excluir(Usuario usuario) {
-            em.remove(em.find(usuario.getClass(), usuario.getId()));        
+            em.remove(em.find(Usuario.class, usuario.getId()));        
     }
 
     public Usuario pesquisar(Long id) {        

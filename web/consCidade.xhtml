@@ -9,46 +9,66 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
-                
+        <h1>Pesquisar Cidade</h1>  
         <h:form>            
-            <h:panelGrid>
-                <p:commandButton value="Novo Cidade" 
-                                 action="#{cidadeMBean.botaoNovo()}"/>
-            </h:panelGrid>
-            <h:panelGrid columns="3">                
+            <p:messages id="messages" showDetail="true" />
+
+            <p:toolbar style="height: 25px">
+                <f:facet name="left">
+                    <p:commandButton value="Novo" icon="fa fa-plus" action="#{cidadeMBean.botaoNovo()}" 
+                                     process="@this" style="width: auto"/>                         
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton value="Fechar" 
+                                     action="home" 
+                                     process="@this"  style="width: auto"/> 
+                </f:facet>                    
+            </p:toolbar>           
+
+
+            <h:panelGrid columns="3"  style="margin-top: 10px; margin-bottom: 10px">                
                 Nome
                 <p:inputText size="20" value="#{cidadeMBean.valorPesquisar}"/>
                 <p:commandButton value="Pesquisar" action="#{cidadeMBean.botaoPesquisar()}" ajax="false"/>
             </h:panelGrid>
-            
+
             <h:panelGrid>
 
-                <p:dataTable id="dtCidade"  rows="10" paginatorPosition="top" value="#{cidadeMBean.listaCidade}" 
-                             var="cidade"   paginator="true"
-                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                              currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-                              rowsPerPageTemplate="5,10,15">
+                <p:dataTable id="dtCidade"  var="cidade" value="#{cidadeMBean.listaCidade}" 
+                             selection="#{cidadeMBean.cidade}" rowKey="#{cidade.id}"
+                             paginator="true" rows="10" paginatorPosition="top" paginatorAlwaysVisible="false"
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} 
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                              
+                             rowsPerPageTemplate="10,20,30" reflow="true" emptyMessage="Registro não econtrado.">
                     <p:column headerText="Id" styleClass="col_codigo">
                         <h:outputText value="#{cidade.id}" />                        
                     </p:column>
                     <p:column headerText="Nome" styleClass="col_codigo">
                         <h:outputText value="#{cidade.nome}" />                        
                     </p:column>
-                   <p:column headerText="Estado" styleClass="col_codigo">
+                    <p:column headerText="Estado" styleClass="col_codigo">
                         <h:outputText value="#{cidade.estado}" />                        
                     </p:column>
                     <p:column headerText="Ações" styleClass="col_opcoes">
-                        <p:commandButton style="margin-right:20px;" icon="pi pi-pencil" title="Editar" action="#{cidadeMBean.botaoEditar()}">
+                        <p:commandButton style="margin-right:20px;" icon="fa fa-fw fa-edit" title="Editar" action="#{cidadeMBean.botaoEditar()}">
                             <f:setPropertyActionListener value="#{cidade}" target="#{cidadeMBean.cidade}"/>
-                        </p:commandButton>
-                        <p:commandButton style="margin-right:20px;" icon="fa fa-fw fa-remove" title="Excluir"/>
+                        </p:commandButton>                        
+                        <p:commandButton id="cBtnExcluir" action="#{cidadeMBean.botaoExcluir()}" 
+                                         icon="fa fa-fw fa-remove"   title="Excluir">                           
+                            <f:setPropertyActionListener value="#{cidade}" target="#{cidadeMBean.cidade}"/>
+                            <p:confirm header="Confirmar a Exclusão" message="Tem certeza que deseja excluir a Cidade ( #{cidade.nome} )?" icon="ui-icon-alert"/>
+                        </p:commandButton>   
                     </p:column>
-                    
-                   
+
+
                 </p:dataTable>
+
             </h:panelGrid>
-            
+            <p:confirmDialog  global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+            </p:confirmDialog>
         </h:form>
-      </ui:define>
+    </ui:define>
 
 </ui:composition>
