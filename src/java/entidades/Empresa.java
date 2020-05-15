@@ -23,21 +23,23 @@ import javax.persistence.TemporalType;
  * @author wender
  */
 @Entity
-@Table(name = "cliente")
-public class Cliente implements Serializable {
+@Table(name = "empresa")
+public class Empresa implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "nome", length = 150, nullable = false)
-    private String nome;
-    @Column(name = "conhecidoComo", length = 150, nullable = false)
-    private String conhecidoComo;
-    @Column(name = "cpf_cnpj", length = 18, nullable = false, unique = true)
-    private String cpfCnpj;
-    @Column(name = "rg_inscricao_estadual", length = 15)
-    private String rgInscricaoEstadual;    
+    @Column(name = "razao_social", length = 150, nullable = false)
+    private String razaoSocial;
+    @Column(name = "nome_fantasia", length = 150, nullable = false)
+    private String nomeFantasia;
+    @Column(name = "cnpj", length = 18, nullable = false, unique = true)
+    private String cnpj;
+    @Column(name = "inscricao_estadual", length = 15)
+    private String inscricaoEstadual;
+    @Column(name = "inscricao_numicipal", length = 15)
+    private String inscricaoMunicipal;
     @Column(name = "telefone", length = 15)
     private String telefone;
     @Column(name = "celular", length = 15)
@@ -67,6 +69,7 @@ public class Cliente implements Serializable {
     @Column(name = "data_alteracao", insertable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAlteracao;
+    
 
     public Long getId() {
         return id;
@@ -76,36 +79,44 @@ public class Cliente implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getRazaoSocial() {
+        return razaoSocial;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
     }
 
-    public String getConhecidoComo() {
-        return conhecidoComo;
+    public String getNomeFantasia() {
+        return nomeFantasia;
     }
 
-    public void setConhecidoComo(String conhecidoComo) {
-        this.conhecidoComo = conhecidoComo;
+    public void setNomeFantasia(String nomeFantasia) {
+        this.nomeFantasia = nomeFantasia;
     }
 
-    public String getCpfCnpj() {
-        return cpfCnpj;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setCpfCnpj(String cpfCnpj) {
-        this.cpfCnpj = cpfCnpj;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
-    public String getRgInscricaoEstadual() {
-        return rgInscricaoEstadual;
+    public String getInscricaoEstadual() {
+        return inscricaoEstadual;
     }
 
-    public void setRgInscricaoEstadual(String rgInscricaoEstadual) {
-        this.rgInscricaoEstadual = rgInscricaoEstadual;
+    public void setInscricaoEstadual(String inscricaoEstadual) {
+        this.inscricaoEstadual = inscricaoEstadual;
+    }
+
+    public String getInscricaoMunicipal() {
+        return inscricaoMunicipal;
+    }
+
+    public void setInscricaoMunicipal(String inscricaoMunicipal) {
+        this.inscricaoMunicipal = inscricaoMunicipal;
     }
 
     public String getTelefone() {
@@ -212,7 +223,6 @@ public class Cliente implements Serializable {
         this.dataAlteracao = dataAlteracao;
     }
     
-
     
 
     @Override
@@ -225,10 +235,10 @@ public class Cliente implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cliente)) {
+        if (!(object instanceof Empresa)) {
             return false;
         }
-        Cliente other = (Cliente) object;
+        Empresa other = (Empresa) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
