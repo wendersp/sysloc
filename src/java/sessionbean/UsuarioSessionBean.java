@@ -17,7 +17,7 @@ import javax.persistence.Query;
  * @author wender
  */
 @Stateful
-public class UsuairoSessionBean {
+public class UsuarioSessionBean {
 
     @PersistenceContext(unitName = "syslocPU")
     private EntityManager em;

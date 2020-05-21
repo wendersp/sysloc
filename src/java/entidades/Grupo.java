@@ -21,8 +21,8 @@ import javax.persistence.TemporalType;
  * @author wender
  */
 @Entity
-@Table(name = "secao")
-public class Secao implements Serializable {
+@Table(name = "grupo")
+public class Grupo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -92,10 +92,10 @@ public class Secao implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Secao)) {
+        if (!(object instanceof Grupo)) {
             return false;
         }
-        Secao other = (Secao) object;
+        Grupo other = (Grupo) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

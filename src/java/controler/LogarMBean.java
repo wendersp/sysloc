@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import sessionbean.UsuairoSessionBean;
+import sessionbean.UsuarioSessionBean;
 
 /**
  *
@@ -21,7 +21,7 @@ public class LogarMBean {
     private String senha;
 
     @EJB
-    private UsuairoSessionBean usuairoSessionBean;
+    private UsuarioSessionBean usuairoSessionBean;
 
     private Usuario usuarioLogado;
 

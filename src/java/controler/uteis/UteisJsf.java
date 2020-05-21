@@ -16,6 +16,7 @@ public class UteisJsf {
         facesContext.addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, sumario, mensagem));
     }
+    
 
     public static void addMensagemInfo(String sumario, String mensagem) {
         FacesContext.getCurrentInstance().addMessage(null,

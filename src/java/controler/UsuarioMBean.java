@@ -13,7 +13,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import sessionbean.UsuairoSessionBean;
+import sessionbean.UsuarioSessionBean;
 
 /**
  *
@@ -30,7 +30,7 @@ public class UsuarioMBean implements Serializable {
     private String dadosPesquisa;
 
     @EJB
-    private UsuairoSessionBean usuarioSBean;
+    private UsuarioSessionBean usuarioSBean;
 
     public UsuarioMBean() {
 
