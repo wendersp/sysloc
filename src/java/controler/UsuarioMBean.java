@@ -5,6 +5,8 @@
  */
 package controler;
 
+import controler.converter.PerfilUsuarioConverter;
+import entidades.PerfilUsuario;
 import entidades.Usuario;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -13,6 +15,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import sessionbean.PerfilUsuarioSessionBean;
 import sessionbean.UsuarioSessionBean;
 
 /**
@@ -26,11 +29,16 @@ public class UsuarioMBean implements Serializable {
     private Usuario usuario;
 
     private List<Usuario> listaUsuario;
-
+    
+    
     private String dadosPesquisa;
 
     @EJB
     private UsuarioSessionBean usuarioSBean;
+    @EJB
+    private PerfilUsuarioSessionBean perfilUsuarioSBean;
+    
+    private PerfilUsuarioConverter perfilUsuarioConverter;
 
     public UsuarioMBean() {
 
@@ -40,19 +48,29 @@ public class UsuarioMBean implements Serializable {
     public void init() {
         usuario = new Usuario();
         listaUsuario = new ArrayList<>();
+        
+    }
+    
+    public List<PerfilUsuario> pesquisarPerfilAutoComplete(String valorPesquisar) {
+        return this.perfilUsuarioSBean.pesquisar(valorPesquisar);
     }
 
     public String botaoNovo() {
+        this.perfilUsuarioConverter = new PerfilUsuarioConverter();
+        this.perfilUsuarioConverter.setPerfilUsuarioSBean(perfilUsuarioSBean);
         usuario = new Usuario();
         return "cadUsuario";
     }
     
-    public String botaoEditar() {        
+    public String botaoEditar() {    
+        this.perfilUsuarioConverter = new PerfilUsuarioConverter();
+        this.perfilUsuarioConverter.setPerfilUsuarioSBean(perfilUsuarioSBean);
         return "cadUsuario";
     }
 
     public String salvar() {
         usuarioSBean.salvar(usuario);
+        System.out.println("Perfil " + usuario.getPerfil().getNome());
         usuario = new Usuario();
         return "consUsuario";
     }
@@ -89,4 +107,13 @@ public class UsuarioMBean implements Serializable {
         return dadosPesquisa;
     }
 
+    public PerfilUsuarioConverter getPerfilUsuarioConverter() {
+        return perfilUsuarioConverter;
+    }
+
+    public void setPerfilUsuarioConverter(PerfilUsuarioConverter perfilUsuarioConverter) {
+        this.perfilUsuarioConverter = perfilUsuarioConverter;
+    }
+
+    
 }

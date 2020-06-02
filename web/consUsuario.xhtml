@@ -52,6 +52,9 @@
                     <p:column headerText="Usuario" styleClass="col_120px">
                         <h:outputText value="#{usuario.userName}" />
                     </p:column>
+                    <p:column headerText="Perfil" styleClass="col_120px">
+                        <h:outputText value="#{usuario.perfil.nome}" />
+                    </p:column>
 
                     <p:column headerText="Ações" styleClass="col_opcoes">
                         <p:commandButton style="margin-right:20px;" icon="fa fa-fw fa-edit" title="Editar" action="#{usuarioMBean.botaoEditar()}">

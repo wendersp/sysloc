@@ -10,9 +10,9 @@
         <h:outputStylesheet name="/css/default.css"/>
         <h:outputStylesheet name="/css/cssLayout.css"/>
         <h:outputStylesheet name="/css/components.css" /> 
-        
+
         <h:outputScript target="body" library="primefaces" name="jquery/jquery.js" />
-        
+
 
         <title>SysLoc 1.0 - Sistema de Locação de Equipamentos</title>
     </h:head>
@@ -29,9 +29,21 @@
                     <h:form>
                         Menu<br/>
                         <p:commandLink value="Home" action="home?faces-redirect=true"/><br/>
-                        <p:commandLink value="Usuario" action="consUsuario?faces-redirect=true"/><br/>
-                        <p:commandLink value="Cidade" action="consCidade?faces-redirect=true"/><br/>
+                        <p:commandLink value="Usuario" action="#{menuMBean.menuUsuario}"/><br/>
+                        <p:commandLink value="Cidade" action="#{menuMBean.menuCidade}"/><br/>
+                        <p:commandLink value="Grupo" action="#{menuMBean.menuGrupo}"/><br/>
+                        <hr/>
+                        <p:commandLink value="Perfil" action="#{menuMBean.menuPerfilUsuario()}"/><br/>
+                        <hr/>
+                        <p:commandLink value="Fechar" action="#{menuMBean.fechar}">
+                            <p:confirm header="LogOff" message="Tem certeza que deseja Sair?" icon="ui-icon-alert"/>
+                        </p:commandLink>
 
+                        <br/>
+                        <p:confirmDialog  global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                        </p:confirmDialog>
                     </h:form>
 
                 </ui:insert>

@@ -12,11 +12,10 @@ import javax.servlet.http.HttpSession;
 public class UteisJsf {
 
     public static void addMensagemErro(String sumario, String mensagem) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();        
+        FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, sumario, mensagem));
     }
-    
 
     public static void addMensagemInfo(String sumario, String mensagem) {
         FacesContext.getCurrentInstance().addMessage(null,
@@ -24,17 +23,24 @@ public class UteisJsf {
                         sumario, mensagem));
     }
 
-    public static void setObjectSession(String nomeObjeto, Object obj) {
+    private static HttpSession getSession() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-        HttpSession session = request.getSession();
+        return request.getSession();
+    }
+
+    public static void setObjectSession(String nomeObjeto, Object obj) {
+        HttpSession session = UteisJsf.getSession();
         session.setAttribute(nomeObjeto, obj);
     }
 
     public static Object getObjectSession(String nomeObjeto) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-        HttpSession session = request.getSession();
+        HttpSession session = UteisJsf.getSession();
         return session.getAttribute(nomeObjeto);
+    }
+
+    public static void removeObjectSession(String nomeObjeto) {
+        HttpSession session = UteisJsf.getSession();
+        session.removeAttribute(nomeObjeto);
     }
 }

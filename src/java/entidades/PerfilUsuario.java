@@ -23,23 +23,21 @@ import javax.persistence.TemporalType;
  * @author wender
  */
 @Entity
-@Table(name = "unidade_medida", schema = "sysloc")
+@Table(name = "perfil_usurio", schema = "sysloc")
 @NamedQueries({
     @NamedQuery(
-            name = "UnidadeMedida.findByNome",
-            query = "SELECT u FROM UnidadeMedida u WHERE u.nome LIKE :nome"
+            name = "PerfilUsuario.findByNome",
+            query = "SELECT p FROM PerfilUsuario p WHERE p.nome LIKE :nome"
     )
 })
-public class UnidadeMedida implements Serializable {
+public class PerfilUsuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "nome", length = 20, nullable = false)
-    private String nome;
-    @Column(name = "simbolo", length = 3, nullable = false, unique = true)
-    private String simbolo;    
+    private String nome;    
     @Column(name = "ativo")
     private Boolean ativo  = true;
     @Column(name = "data_cadastro", updatable = false)
@@ -48,7 +46,6 @@ public class UnidadeMedida implements Serializable {
     @Column(name = "data_alteracao", insertable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAlteracao;
-    
 
     public Long getId() {
         return id;
@@ -65,14 +62,7 @@ public class UnidadeMedida implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    public String getSimbolo() {
-        return simbolo;
-    }
-
-    public void setSimbolo(String simbolo) {
-        this.simbolo = simbolo;
-    }
+   
 
     public Boolean getAtivo() {
         return ativo;
@@ -110,10 +100,10 @@ public class UnidadeMedida implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof UnidadeMedida)) {
+        if (!(object instanceof PerfilUsuario)) {
             return false;
         }
-        UnidadeMedida other = (UnidadeMedida) object;
+        PerfilUsuario other = (PerfilUsuario) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -122,7 +112,7 @@ public class UnidadeMedida implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.UnidadeMedida[ id=" + id + " ]";
+        return "entidades.PerfilUsuairo[ id=" + id + " ]";
     }
     
 }

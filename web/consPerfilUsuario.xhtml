@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h1>Pesquisar Perfil Usuario</h1>  
+        <h:form>            
+            <p:messages id="messages" showDetail="true" />
+
+            <p:toolbar style="height: 25px">
+                <f:facet name="left">
+                    <p:commandButton value="Novo" icon="fa fa-plus" action="#{perfilUsuarioMBean.botaoNovo()}" 
+                                     process="@this" style="width: auto"/>                         
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton value="Fechar" 
+                                     action="home" 
+                                     process="@this"  style="width: auto"/> 
+                </f:facet>                    
+            </p:toolbar>           
+
+
+            <h:panelGrid columns="3"  style="margin-top: 10px; margin-bottom: 10px">                
+                Nome
+                <p:inputText size="20" value="#{perfilUsuarioMBean.valorPesquisar}"/>
+                <p:commandButton value="Pesquisar" action="#{perfilUsuarioMBean.botaoPesquisar()}" ajax="false"/>
+            </h:panelGrid>
+
+            <h:panelGrid>
+
+                <p:dataTable id="dtPerfilUsuario"  var="perfilUsuario" value="#{perfilUsuarioMBean.listaPerfilUsuarios}" 
+                             selection="#{perfilUsuarioMBean.perfilUsuario}" rowKey="#{perfilUsuario.id}"
+                             paginator="true" rows="10" paginatorPosition="top" paginatorAlwaysVisible="false"
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} 
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                              
+                             rowsPerPageTemplate="10,20,30" reflow="true" emptyMessage="Registro não econtrado.">
+                    <p:column headerText="Id" styleClass="col_codigo">
+                        <h:outputText value="#{perfilUsuario.id}" />                        
+                    </p:column>
+                    <p:column headerText="Nome" styleClass="col_codigo">
+                        <h:outputText value="#{perfilUsuario.nome}" />                        
+                    </p:column>                    
+                    <p:column headerText="Ações" styleClass="col_opcoes">
+                        <p:commandButton style="margin-right:20px;" icon="fa fa-fw fa-edit" title="Editar" action="#{perfilUsuarioMBean.botaoEditar()}">
+                            <f:setPropertyActionListener value="#{perfilUsuario}" target="#{perfilUsuarioMBean.perfilUsuario}"/>
+                        </p:commandButton>                        
+                        <p:commandButton id="cBtnExcluir" action="#{perfilUsuarioMBean.botaoExcluir()}" 
+                                         icon="fa fa-fw fa-remove"   title="Excluir">                           
+                            <f:setPropertyActionListener value="#{perfilUsuario}" target="#{perfilUsuarioMBean.perfilUsuario}"/>
+                            <p:confirm header="Confirmar a Exclusão" message="Tem certeza que deseja excluir o PerfilUsuario ( #{perfilUsuario.nome} )?" icon="ui-icon-alert"/>
+                        </p:commandButton>   
+                    </p:column>
+
+
+                </p:dataTable>
+
+            </h:panelGrid>
+            <p:confirmDialog  global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+            </p:confirmDialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

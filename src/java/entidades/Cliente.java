@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,7 +25,17 @@ import javax.persistence.TemporalType;
  * @author wender
  */
 @Entity
-@Table(name = "cliente")
+@Table(name = "cliente", schema = "sysloc")
+@NamedQueries({
+    @NamedQuery(
+            name = "Cliente.findByNome",
+            query = "SELECT c FROM Cliente c WHERE c.nome LIKE :nome"
+    ),
+    @NamedQuery(
+            name = "Cliente.findByCpfCnpj",
+            query = "SELECT c FROM Cliente c WHERE c.cpfCnpj = :cpfCnpj"
+    )
+})
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -43,6 +43,12 @@ public class LogarMBean {
         return null;
     }
 
+    public String fechar() {
+        UteisJsf.removeObjectSession("usuarioLogado");
+        UteisJsf.addMensagemInfo("Logoff realizado com sucesso.","");
+        return "login?faces-redirect=true";
+    }
+    
     public String getUserName() {
         return userName;
     }

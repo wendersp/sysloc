@@ -16,6 +16,16 @@
                 <p:inputText id="iTxtNome" size="50" maxlength="50" value="#{usuarioMBean.usuario.nome}" />
                 <p:outputLabel for="iTxtEmail" value="E-mail"/>
                 <p:inputText id="iTxtEmail" size="50" maxlength="50"  value="#{usuarioMBean.usuario.email}"/>
+                <p:outputLabel value="Perfil" for="acPerfil" />
+                <p:autoComplete id="acPerfil" value="#{usuarioMBean.usuario.perfil}"
+                                            completeMethod="#{usuarioMBean.pesquisarPerfilAutoComplete}"
+                                            var="vPerfil"
+                                            itemLabel="#{vPerfil.nome}"
+                                            itemValue="#{vPerfil}"
+                                            forceSelection="true"
+                                            dropdown="true"
+                                            label="Perfil"                                             
+                                            converter="#{usuarioMBean.perfilUsuarioConverter}"/> 
                 <p:outputLabel for="iTxtUsuario" value="Usuario"/>
                 <p:inputText id="iTxtUsuario" size="10" maxlength="10" value="#{usuarioMBean.usuario.userName}"/>
                 <p:outputLabel for="pwSenha" value="Senha"/>

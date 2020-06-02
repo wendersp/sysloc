@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -41,6 +43,9 @@ public class Usuario implements Serializable {
     private String nome;
     @Column(name = "email", length = 50)
     private String email;
+    @ManyToOne
+    @JoinColumn(name = "perfil_id")
+    private PerfilUsuario perfil;
     @Column(name = "user_name", length = 10)
     private String userName;
     @Column(name = "senha", length = 10)
@@ -73,6 +78,16 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
+    public PerfilUsuario getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(PerfilUsuario perfil) {
+        this.perfil = perfil;
+    }
+
+    
+    
     public String getUserName() {
         return userName;
     }

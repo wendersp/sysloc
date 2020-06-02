@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,7 +25,22 @@ import javax.persistence.TemporalType;
  * @author wender
  */
 @Entity
-@Table(name = "empresa")
+@Table(name = "empresa", schema = "sysloc")
+@NamedQueries({
+    @NamedQuery(
+            name = "Empresa.findByNomeFantasia",
+            query = "SELECT e FROM Empresa e WHERE e.nomeFantasia LIKE :nomeFantasia"
+    ), 
+    @NamedQuery(
+            name = "Empresa.findByRazaoSocial",
+            query = "SELECT e FROM Empresa e WHERE e.razaoSocial LIKE :razaoSocial"
+    ),
+    @NamedQuery(
+            name = "Empresa.findByCnpj",
+            query = "SELECT e FROM Empresa e WHERE e.cnpj = :cnpj"
+    )
+        
+})
 public class Empresa implements Serializable {
 
     private static final long serialVersionUID = 1L;
