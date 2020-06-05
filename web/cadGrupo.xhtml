@@ -20,7 +20,7 @@
             </h:panelGrid>
 
             <h:panelGrid columns="2">
-                <p:commandButton value="Salvar" action="#{grupoMBean.botaoSalvar()}" />
+                <p:commandButton value="Salvar" action="#{grupoMBean.botaoSalvar()}" update="@form"/>
                 <p:commandButton value="Pesquisar" action="consGrupo?faces-redirect=true" />
             </h:panelGrid>
             

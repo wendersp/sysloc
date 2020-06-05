@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h:form>
+            <h1>Cadastro de Produto</h1>
+            <br/>
+            <p:messages showSummary="true" autoUpdate="true"/>
+            <h:panelGrid columns="2" >
+                Id
+                <p:inputText id="iTxtId" size="10" value="#{produtoMBean.produto.id}"/>
+                Nome
+                <p:inputText id="iTxtNome" size="50" value="#{produtoMBean.produto.nome}" />
+                <p:outputLabel value="Grupo" for="acGrupo" />
+                <p:autoComplete id="acGrupo" size="46" value="#{produtoMBean.produto.grupo}"
+                                completeMethod="#{produtoMBean.pesquisarGrupoAutoComplete}"
+                                var="varGrupo"
+                                itemLabel="#{varGrupo.nome}"
+                                itemValue="#{varGrupo}"
+                                forceSelection="true"
+                                dropdown="true"
+                                label="Grupo"                                             
+                                converter="#{produtoMBean.grupoConverter}"/> 
+                <p:outputLabel value="Estoque" for="iTxtEstoque" />
+                <p:inputText id="iTxtEstoque" size="10" value="#{produtoMBean.produto.estoque}" />
+                <p:outputLabel value="Unidade de Medida" for="acUnidadeMedida" />
+                <p:autoComplete id="acUnidadeMedida" value="#{produtoMBean.produto.unidadeMedida}"
+                                completeMethod="#{produtoMBean.pesquisarUnidadeMedidaAutoComplete}"
+                                var="varUnidadeMedida"
+                                itemLabel="#{varUnidadeMedida.nome}"
+                                itemValue="#{varUnidadeMedida}"
+                                forceSelection="true"
+                                dropdown="true"
+                                label="Unidade de Medida"                                             
+                                converter="#{produtoMBean.unidadeMedidaConverter}"/> 
+                <p:outputLabel value="Valor" for="iTxtValor" />
+                <p:inputNumber id="iTxtValor" size="10" value="#{produtoMBean.produto.valor}" />                
+            </h:panelGrid>
+            
+             <p:panelGrid columns="1" >
+                 <p:commandButton id="cBtnAbrirPesquisarFornecedor" action="#{produtoMBean.botaoAbrirPesquisaFornecedor}" icon="fa fa-plus"    title="Adicionar Fornecedor"/>
+                 <p:dataTable id="dtFornecedor"  var="fornecedor" value="#{produtoMBean.produto.listaFornecedores}"                                                           
+                             reflow="true" emptyMessage="Registro não econtrado.">
+
+                    <p:column headerText="Id" styleClass="col_codigo">
+                        <h:outputText value="#{fornecedor.id}" />                        
+                    </p:column>
+
+                    <p:column headerText="Nome" styleClass="col_nome">
+                        <h:outputText value="#{fornecedor.nomeFantasia}" />
+                    </p:column>
+
+
+                    <p:column headerText="Ações" styleClass="col_opcoes">
+                        
+                        <p:commandButton id="cBtnExcluir" action="#{produtoMBean.botaoRemoverFornecedor()}" 
+                                         icon="fa fa-fw fa-remove"    title="Excluir" update="dtFornecedor">                           
+                            <f:setPropertyActionListener value="#{fornecedor}" target="#{produtoMBean.fornecedorSelecionado}" />
+                            <p:confirm header="Confirmar a Exclusão"  message="Tem certeza que deseja remover o Fornecedor ( #{fornecedor.nomeFantasia} )?" icon="ui-icon-alert"/>
+                        </p:commandButton>  
+                    </p:column>
+
+                </p:dataTable>
+
+            </p:panelGrid>
+            
+
+            <h:panelGrid columns="2">
+                <p:commandButton value="Salvar" action="#{produtoMBean.botaoSalvar()}" update="@form"/>
+                <p:commandButton value="Pesquisar" action="#{produtoMBean.botaoNavPesquisar}" />
+            </h:panelGrid>
+
+        </h:form>            
+    </ui:define>
+
+</ui:composition>

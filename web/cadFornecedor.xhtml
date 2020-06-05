@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h1>Cadastro de Fornecedor</h1>
+        
+        <h:form id="form">
+            <p:panelGrid columns="2" styleClass="panelgrid-noborder">
+                <p:outputLabel for="iTxtId" value="Id"/>
+                <p:inputText id="iTxtId" size="10" readonly="true" value="#{fornecedorMBean.fornecedor.id}"/>
+                <p:outputLabel for="iTxtNomeFantasia" value="Nome Fantasia"/> 
+                <p:inputText id="iTxtNomeFantasia" size="50" maxlength="50" value="#{fornecedorMBean.fornecedor.nomeFantasia}" />
+                <p:outputLabel for="iTxtRazaoSocial" value="Razão Social"/> 
+                <p:inputText id="iTxtRazaoSocial" size="50" maxlength="50" value="#{fornecedorMBean.fornecedor.razaoSocial}" />
+                <p:outputLabel for="iTMskCnpj" value="CNPJ"/>
+                <p:inputMask id="iTMskCnpj" size="20" maxlength="18"  value="#{fornecedorMBean.fornecedor.cnpj}" mask="99.999.999/9999-99"/>
+                <p:outputLabel for="iTMskTelefone" value="Telefone"/>
+                <p:inputMask id="iTMskTelefone" size="15" maxlength="14"  value="#{fornecedorMBean.fornecedor.telefone}" mask="(99) 9999-9999"/>
+                <p:outputLabel value="Cidade" for="acCidade" />
+                <p:autoComplete id="acCidade" size="46" value="#{fornecedorMBean.fornecedor.cidade}" 
+                                            completeMethod="#{fornecedorMBean.pesquisarCidadeAutoComplete}"
+                                            var="vCidade"
+                                            itemLabel="#{vCidade.nome}"
+                                            itemValue="#{vCidade}"
+                                            forceSelection="true"
+                                            dropdown="true"
+                                            label="Cidade"                                             
+                                            converter="#{fornecedorMBean.cidadeConverter}"/> 
+                <p:outputLabel for="iTxtBairro" value="Bairro"/>
+                <p:inputText id="iTxtBairro" size="50" maxlength="50"  value="#{fornecedorMBean.fornecedor.bairro}"/>
+                <p:outputLabel for="iTxtEndereco" value="Endereco"/>
+                <p:inputText id="iTxtEndereco" size="50" maxlength="50"  value="#{fornecedorMBean.fornecedor.bairro}"/>
+                 <p:outputLabel for="iTMskCep" value="Cep"/>
+                 <p:inputMask id="iTMskCep" size="10" maxlength="10"  value="#{fornecedorMBean.fornecedor.cep}" mask="99.999-999"/>
+                
+            </p:panelGrid>
+            <br/>
+            <p:commandButton id="cBtnSalvar" value="Salvar" action="#{fornecedorMBean.botaoSalvar}" update="@form"/>
+
+            <p:commandButton id="cBtnPesquisar" value="Pesquisar" action="consFornecedor?faces-redirect=true" ajax="false"/>
+            
+        </h:form>
+
+
+
+    </ui:define>
+
+</ui:composition>

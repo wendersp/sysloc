@@ -22,7 +22,7 @@
             </h:panelGrid>
 
             <h:panelGrid columns="2">
-                <p:commandButton value="Salvar" action="#{unidadeMedidaMBean.botaoSalvar()}" />
+                <p:commandButton value="Salvar" action="#{unidadeMedidaMBean.botaoSalvar()}" update="@form"/>
                 <p:commandButton value="Pesquisar" action="consUnidadeMedida?faces-redirect=true" />
             </h:panelGrid>
             

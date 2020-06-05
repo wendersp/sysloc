@@ -28,6 +28,16 @@
             <to-view-id>/cadUsuario.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>consUnidadeMedida</from-outcome>
+            <to-view-id>/consUnidadeMedida.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cadUnidadeMedida</from-outcome>
+            <to-view-id>/cadUnidadeMedida.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
         
    

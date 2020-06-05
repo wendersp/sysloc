@@ -9,13 +9,13 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
-        <h1>Pesquisar Grupo</h1>  
+        <h1>Pesquisar Fornecedor</h1>  
         <h:form>            
             <p:messages id="messages" showDetail="true" />
 
             <p:toolbar style="height: 25px">
                 <f:facet name="left">
-                    <p:commandButton value="Novo" icon="fa fa-plus" action="#{grupoMBean.botaoNovo()}" 
+                    <p:commandButton value="Novo" icon="fa fa-plus" action="#{fornecedorMBean.botaoNovo()}" 
                                      process="@this" style="width: auto"/>                         
                 </f:facet>
                 <f:facet name="right">
@@ -28,32 +28,33 @@
 
             <h:panelGrid columns="3"  style="margin-top: 10px; margin-bottom: 10px">                
                 Nome
-                <p:inputText size="20" value="#{grupoMBean.valorPesquisar}"/>
-                <p:commandButton value="Pesquisar" action="#{grupoMBean.botaoPesquisar()}" ajax="false"/>
+                <p:inputText size="20" value="#{fornecedorMBean.valorPesquisar}"/>
+                <p:commandButton value="Pesquisar" action="#{fornecedorMBean.botaoPesquisar()}" ajax="false"/>
             </h:panelGrid>
 
             <h:panelGrid>
 
-                <p:dataTable id="dtGrupo"  var="grupo" value="#{grupoMBean.listaGrupos}" 
-                             selection="#{grupoMBean.grupo}" rowKey="#{grupo.id}"
+                <p:dataTable id="dtFornecedor"  var="fornecedor" value="#{fornecedorMBean.listaFornecedores}" 
+                             selection="#{fornecedorMBean.fornecedor}" rowKey="#{fornecedor.id}"
                              paginator="true" rows="10" paginatorPosition="top" paginatorAlwaysVisible="false"
                              paginatorTemplate="{FirstPageLink} {PreviousPageLink} 
                              {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                              
                              rowsPerPageTemplate="10,20,30" reflow="true" emptyMessage="Registro não econtrado.">
                     <p:column headerText="Id" styleClass="col_codigo">
-                        <h:outputText value="#{grupo.id}" />                        
+                        <h:outputText value="#{fornecedor.id}" />                        
                     </p:column>
                     <p:column headerText="Nome" styleClass="col_codigo">
-                        <h:outputText value="#{grupo.nome}" />                        
-                    </p:column>                    
+                        <h:outputText value="#{fornecedor.nomeFantasia}" />                        
+                    </p:column>
+                    
                     <p:column headerText="Ações" styleClass="col_opcoes">
-                        <p:commandButton style="margin-right:20px;" icon="fa fa-fw fa-edit" title="Editar" action="#{grupoMBean.botaoEditar()}">
-                            <f:setPropertyActionListener value="#{grupo}" target="#{grupoMBean.grupo}"/>
+                        <p:commandButton style="margin-right:20px;" icon="fa fa-fw fa-edit" title="Editar" action="#{fornecedorMBean.botaoEditar()}">
+                            <f:setPropertyActionListener value="#{fornecedor}" target="#{fornecedorMBean.fornecedor}"/>
                         </p:commandButton>                        
-                        <p:commandButton id="cBtnExcluir" action="#{grupoMBean.botaoExcluir()}" 
+                        <p:commandButton id="cBtnExcluir" action="#{fornecedorMBean.botaoExcluir()}" 
                                          icon="fa fa-fw fa-remove"   title="Excluir">                           
-                            <f:setPropertyActionListener value="#{grupo}" target="#{grupoMBean.grupo}"/>
-                            <p:confirm header="Confirmar a Exclusão" message="Tem certeza que deseja excluir o Grupo ( #{grupo.nome} )?" icon="ui-icon-alert"/>
+                            <f:setPropertyActionListener value="#{fornecedor}" target="#{fornecedorMBean.fornecedor}"/>
+                            <p:confirm header="Confirmar a Exclusão" message="Tem certeza que deseja excluir a Fornecedor ( #{fornecedor.nomeFantasia} )?" icon="ui-icon-alert"/>
                         </p:commandButton>   
                     </p:column>
 
