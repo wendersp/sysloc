@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +17,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,33 +28,12 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "comodato", schema = "sysloc")
-@NamedQueries({
-    @NamedQuery(
-            name = "Comodato.findByCliente",
-            query = "SELECT c FROM Comodato c WHERE c.empresa = :empresa AND c.cliente = :cliente"
-    ),
-    @NamedQuery(
-            name = "Comodato.findByDataContrato",
-            query = "SELECT c FROM Comodato c WHERE c.empresa = :empresa AND c.dataContrato = :dataContrato"
-    ),
-    @NamedQuery(
-            name = "Comodato.findByDataVencimento",
-            query = "SELECT c FROM Comodato c WHERE c.empresa = :empresa AND c.dataVencimento = :dataVencimento"
-    ),
-    @NamedQuery(
-            name = "Comodato.findByEmpresa",
-            query = "SELECT c FROM Comodato c WHERE c.empresa = :empresa"
-    )
-})
 public class Comodato implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @ManyToOne
-    @JoinColumn(name = "empresa_id")
-    private Empresa empresa;
+    private Long id;    
     @Column(name = "data_contrato", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dataContrato;
@@ -69,24 +47,29 @@ public class Comodato implements Serializable {
     private Double valorTotal;
     @Column(name = "osbservacao", length = 255)
     private String observacao;
-    @OneToMany
-    private List<ItensComodato> itens;
+    @OneToMany(mappedBy = "comodato", cascade = CascadeType.ALL )
+    private List<ItemComodato> itens;
 
     public Comodato() {
-        this.itens = new ArrayList<>();
+
     }
-    
-    public void adicionarItens(ItensComodato itensComodato) {
-        ItensComodato item = itensComodato;
-        item.setComodato(this);
-        this.itens.add(item);
+
+    public void adicionarItem(ItemComodato itemComodato) {
+        if (this.itens == null) {
+            this.itens = new ArrayList<>();
+        }
+        if (itemComodato != null) {
+            itemComodato.setComodato(this);
+            this.itens.add(itemComodato);
+        }
     }
-    
-    public void removerItens(ItensComodato itensComodato) {
-        this.itens.remove(itensComodato);
+
+    public void removerItens(ItemComodato itemComodato) {
+        if (itemComodato != null && this.itens != null && this.itens.contains(itemComodato)) {
+            this.itens.remove(itemComodato);
+        }
     }
-    
-    
+
     public Long getId() {
         return id;
     }
@@ -94,14 +77,7 @@ public class Comodato implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
+   
 
     public Date getDataContrato() {
         return dataContrato;
@@ -143,15 +119,14 @@ public class Comodato implements Serializable {
         this.observacao = observacao;
     }
 
-    public List<ItensComodato> getItens() {
+    public List<ItemComodato> getItens() {
         return itens;
     }
 
-    public void setItens(List<ItensComodato> itens) {
+    public void setItens(List<ItemComodato> itens) {
         this.itens = itens;
     }
 
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -176,5 +151,5 @@ public class Comodato implements Serializable {
     public String toString() {
         return "entidades.Comodato[ id=" + id + " ]";
     }
-    
+
 }

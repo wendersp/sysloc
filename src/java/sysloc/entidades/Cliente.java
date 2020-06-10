@@ -30,7 +30,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(
             name = "Cliente.findByNome",
             query = "SELECT c FROM Cliente c WHERE c.nome LIKE :nome"
-    ),
+    )
+    ,
     @NamedQuery(
             name = "Cliente.findByCpfCnpj",
             query = "SELECT c FROM Cliente c WHERE c.cpfCnpj = :cpfCnpj"
@@ -49,20 +50,22 @@ public class Cliente implements Serializable {
     @Column(name = "cpf_cnpj", length = 18, nullable = false, unique = true)
     private String cpfCnpj;
     @Column(name = "rg_inscricao_estadual", length = 15)
-    private String rgInscricaoEstadual;    
+    private String rgInscricaoEstadual;
     @Column(name = "telefone", length = 15)
     private String telefone;
     @Column(name = "celular", length = 15)
     private String celular;
     @Column(name = "email", length = 50)
     private String email;
+    @Column(name = "cep", length = 10)
+    private String cep;
     @ManyToOne
     @JoinColumn(name = "cidade_id")
     private Cidade cidade;
-    @Column(name = "logradouro", length = 150)
-    private String logradouro;
     @Column(name = "bairro", length = 150)
     private String bairro;
+    @Column(name = "logradouro", length = 150)
+    private String logradouro;
     @Column(name = "numero", length = 10)
     private String numero;
     @Column(name = "quadra", length = 10)
@@ -72,7 +75,7 @@ public class Cliente implements Serializable {
     @Column(name = "complemento_endereco", length = 255)
     private String complementoEndereco;
     @Column(name = "ativo")
-    private Boolean ativo  = true;
+    private Boolean ativo = true;
     @Column(name = "data_cadastro", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCadastro;
@@ -143,6 +146,16 @@ public class Cliente implements Serializable {
     public void setEmail(String email) {
         this.email = email.toLowerCase();
     }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+    
+    
 
     public Cidade getCidade() {
         return cidade;
@@ -223,9 +236,6 @@ public class Cliente implements Serializable {
     public void setDataAlteracao(Date dataAlteracao) {
         this.dataAlteracao = dataAlteracao;
     }
-    
-
-    
 
     @Override
     public int hashCode() {
@@ -249,7 +259,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.Empresa[ id=" + id + " ]";
+        return "entidades.cliente[ id=" + id + " ]";
     }
-    
+
 }

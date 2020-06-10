@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <h:form>
+            <h1>Cadastro de Comodato</h1>
+            <!--Painel Comodato -->
+            <h:panelGrid id="pGComodato" columns="2" >
+                Nro Contrato
+                <h:panelGroup>
+                    <p:inputText id="iTxtId" size="10" readonly="true" value="#{comodatoMBean.comodato.id}"/>
+                    Data Emissão
+                    <p:calendar id="calDataEmissao"  showOn="button"  pattern="dd/MM/yyyy" locale="pt_BR" size="10" 
+                                value="#{comodatoMBean.comodato.dataContrato}"/> 
+                    Data Vencimento
+                    <p:calendar id="calDataVencimento"  showOn="button"  pattern="dd/MM/yyyy" locale="pt_BR" size="10" 
+                                value="#{comodatoMBean.comodato.dataVencimento}"/>
+                </h:panelGroup>
+
+                Cliente
+                <p:autoComplete id="acCliente" size="46" value="#{comodatoMBean.comodato.cliente}" 
+                                completeMethod="#{comodatoMBean.pesquisarClienteAutoComplete}"
+                                var="vCliente"
+                                itemLabel="#{vCliente.nome}"
+                                itemValue="#{vCliente}"
+                                forceSelection="true"
+                                dropdown="true"
+                                label="Cliente"                                             
+                                converter="#{comodatoMBean.clienteConverter}"/> 
+
+            </h:panelGrid>
+
+            <hr/>
+            <p:commandButton  value="Add Item" action="#{comodatoMBean.addItemComodatoNav}"/>                
+
+            <!-- dataTable lista os Item Comodato do Contrato -->
+            <h:panelGrid columns="1">
+                
+                <p:dataTable id="dtItensComodato"  var="itemComodato" value="#{comodatoMBean.comodato.itens}" 
+                             selection="#{comodatoMBean.itemComodato}" 
+                             paginator="true" rows="10" paginatorPosition="top" paginatorAlwaysVisible="false"
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} 
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                              
+                             rowsPerPageTemplate="10,20,30" reflow="true" emptyMessage="Registro não econtrado.">
+                    <f:facet name="header">
+                        Itens Comodato
+                    </f:facet>
+                    <p:column headerText="Id Produto" styleClass="col_codigo">
+                        <h:outputText value="#{itemComodato.produto.id}" />                        
+                    </p:column>
+                    <p:column headerText="Produto" styleClass="col_codigo">
+                        <h:outputText value="#{itemComodato.produto.nome}" />                        
+                    </p:column>
+                    <p:column headerText="Unidade de Medida" styleClass="col_codigo">
+                        <h:outputText value="#{itemComodato.produto.unidadeMedida.simbolo}" />                        
+                    </p:column>
+                    <p:column headerText="Valor" styleClass="col_codigo">
+                        <h:outputText value="#{itemComodato.valor}" >
+                            <f:convertNumber pattern="#0.00" locale="pt_BR"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Quantidade" styleClass="col_codigo">
+                        <h:outputText value="#{itemComodato.quantidade}" >
+                            <f:convertNumber pattern="#0.000" locale="pt_BR"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Valor Total" styleClass="col_codigo">
+                        <h:outputText value="#{itemComodato.valorTotal}" >
+                            <f:convertNumber pattern="#0.00" locale="pt_BR"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Ações" styleClass="col_opcoes">
+                        <p:commandButton id="cBtnEditarItemComodato" action="#{comodatoMBean.botaoEditarItemComodato}" 
+                                         style="margin-right:20px;" icon="fa fa-fw fa-edit" title="Editar" >
+                            <f:setPropertyActionListener value="#{itemComodato}" target="#{comodatoMBean.itemComodato}"/>                            
+                        </p:commandButton>                        
+                        <p:commandButton id="cBtnExcluirItemComodato" icon="fa fa-fw fa-remove"   title="Excluir">                           
+                            <f:setPropertyActionListener value="#{itemComodato}" target="#{comodatoMBean.itemComodato}"/>
+                            <p:ajax process="cBtnExcluirItemComodato"  listener="#{comodatoMBean.botaoRemoverItemComodato}" update="dtItensComodato"/>
+                            <p:confirm header="Confirmar a Exclusão" message="Tem certeza que deseja remover o Produto do Contrato de Comodato?"
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>   
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+            
+            <h:panelGrid columns="2">
+                <p:commandButton value="Salvar" action="#{comodatoMBean.botaoSalvar}" ajax="false"/>                                    
+                <p:commandButton value="Pesquisar" action="#{comodatoMBean.botaoPesquisarNav}" />
+            </h:panelGrid>
+
+        </h:form>      
+        
+        <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
+            <p:panelGrid id="display" columns="2" columnClasses="label,value">
+
+                <h:outputText value="Button:" />
+                <h:outputText >
+                    <f:convertDateTime pattern="dd/MMM/yyyy" locale="pt_BR" />
+                </h:outputText>
+            </p:panelGrid>
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>

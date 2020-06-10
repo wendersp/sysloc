@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h1>Cadastro de Cliente</h1>
+        
+        <h:form id="form">
+            <p:panelGrid columns="2" styleClass="panelgrid-noborder">
+                <p:outputLabel for="iTxtId" value="Id"/>
+                <p:inputText id="iTxtId" size="10" readonly="true" value="#{clienteMBean.cliente.id}"/>
+                <p:outputLabel for="iTxtNome" value="Nome"/> 
+                <p:inputText id="iTxtNome" size="50" maxlength="50" value="#{clienteMBean.cliente.nome}" />
+                <p:outputLabel for="iTxtConhecidoComo" value="Conhecido como"/> 
+                <p:inputText id="iTxtConhecidoComo" size="50" maxlength="50" value="#{clienteMBean.cliente.conhecidoComo}" />
+                <p:outputLabel for="iTxtCpfCnpj" value="CPF/CNPJ"/>
+                <p:inputText id="iTxtCpfCnpj" size="20" maxlength="18"  value="#{clienteMBean.cliente.cpfCnpj}"/>
+                <p:outputLabel for="iTMskTelefone" value="Telefone"/>
+                <p:inputMask id="iTMskTelefone" size="15" maxlength="14"  value="#{clienteMBean.cliente.telefone}" mask="(99) 9999-9999"/>                
+                <p:outputLabel for="iTMskCelular" value="Celular"/>
+                <p:inputMask id="iTMskCelular" size="15" maxlength="14"  value="#{clienteMBean.cliente.celular}" mask="(99) 9999-9999"/>
+                <p:outputLabel for="iTxtEmail" value="E-mail"/> 
+                <p:inputText id="iTxtEmail" size="50" maxlength="50" value="#{clienteMBean.cliente.email}" />
+                <p:outputLabel value="Cidade" for="acCidade" />
+                <p:autoComplete id="acCidade" size="46" value="#{clienteMBean.cliente.cidade}" 
+                                            completeMethod="#{clienteMBean.pesquisarCidadeAutoComplete}"
+                                            var="vCidade"
+                                            itemLabel="#{vCidade.nome}"
+                                            itemValue="#{vCidade}"
+                                            forceSelection="true"
+                                            dropdown="true"
+                                            label="Cidade"                                             
+                                            converter="#{clienteMBean.cidadeConverter}"/> 
+                <p:outputLabel for="iTxtBairro" value="Bairro"/>
+                <p:inputText id="iTxtBairro" size="50" maxlength="50"  value="#{clienteMBean.cliente.bairro}"/>
+                <p:outputLabel for="iTxtEndereco" value="Endereco"/>
+                <p:inputText id="iTxtEndereco" size="50" maxlength="50"  value="#{clienteMBean.cliente.logradouro}"/>
+                <p:outputLabel for="iTxtNumero" value="Numero"/>
+                <p:inputText id="iTxtNumero" size="5" maxlength="5"  value="#{clienteMBean.cliente.numero}"/>
+                <p:outputLabel for="iTxtQuadra" value="Quadra"/>
+                <p:inputText id="iTxtQuadra" size="5" maxlength="5"  value="#{clienteMBean.cliente.quadra}"/>
+                <p:outputLabel for="iTxtLote" value="Lote"/>
+                <p:inputText id="iTxtLote" size="5" maxlength="5"  value="#{clienteMBean.cliente.lote}"/>
+                <p:outputLabel for="iTxtComplemento" value="Complemento"/>
+                <p:inputText id="iTxtComplemento" size="50" maxlength="255"  value="#{clienteMBean.cliente.complementoEndereco}"/>
+                 <p:outputLabel for="iTMskCep" value="Cep"/>                 
+                 <p:inputMask id="iTMskCep" size="10" maxlength="10"  value="#{clienteMBean.cliente.cep}" mask="99.999-999"/>
+                
+            </p:panelGrid>
+            <br/>
+            <p:commandButton id="cBtnSalvar" value="Salvar" action="#{clienteMBean.botaoSalvar}" update="@form"/>
+
+            <p:commandButton id="cBtnPesquisar" value="Pesquisar" action="#{clienteMBean.botaoNavPesquisar()}" ajax="false"/>
+            
+        </h:form>
+
+
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,102 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        
+        <h1>Pesquisar Contratos de comodato</h1>  
+        <h:form>            
+            <p:messages id="messages" showDetail="true" />
+
+            <p:toolbar style="height: 25px">
+                <f:facet name="left">
+                    <p:commandButton value="Novo" icon="fa fa-plus" action="#{comodatoMBean.botaoNovo()}" 
+                                     process="@this" style="width: auto"/>                         
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton value="Fechar" 
+                                     action="#{menuMBean.menuHome}" 
+                                     process="@this"  style="width: auto"/> 
+                </f:facet>                    
+            </p:toolbar>           
+
+            <!-- inicio Paniel de filtro da pesquisa -->
+            <h:panelGrid columns="2"  style="margin-top: 10px; margin-bottom: 10px">                
+                Cliente
+               <p:autoComplete id="acCliente" size="46" value="#{comodatoMBean.clientePesquisar}" 
+                                completeMethod="#{comodatoMBean.pesquisarClienteAutoComplete}"
+                                var="vCliente"
+                                itemLabel="#{vCliente.nome}"
+                                itemValue="#{vCliente}"
+                                forceSelection="true"
+                                dropdown="true"
+                                label="Cliente"                                             
+                                converter="#{comodatoMBean.clienteConverter}"/>
+               <p:outputLabel value=""/>
+               <p:selectBooleanCheckbox  id="slBChxDataComodato" value="#{comodatoMBean.isPesquisarDataVencimento}" 
+                                         itemLabel="Pesquisar por Data Vencimento"/>                    
+               Data
+                <h:panelGroup>
+                    <p:calendar id="calDataInicial" value="#{comodatoMBean.dataInicial}" mask="99/99/9999" 
+                                pattern="dd/MM/yyyy" maskAutoClear="true" locale="pt_BR"/>
+                até
+                <p:calendar id="calDataFinal" value="#{comodatoMBean.dataFinal}" mask="99/99/9999" 
+                            pattern="dd/MM/yyyy" maskAutoClear="true" locale="pt_BR"/>
+                </h:panelGroup>
+                <p:commandButton value="Pesquisar" action="#{comodatoMBean.botaoPesquisarComodato}" ajax="false"/>
+            </h:panelGrid>
+            <!-- fim Paniel de filtro da pesquisa -->
+            
+            <!-- Data Table  -->
+            <h:panelGrid>
+                <p:dataTable id="dtComodato"  var="comodato" value="#{comodatoMBean.listaComodatos}"                             
+                             paginator="true" rows="10" paginatorPosition="top" paginatorAlwaysVisible="false"
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} 
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                              
+                             rowsPerPageTemplate="10,20,30" reflow="true" emptyMessage="Registro não econtrado.">
+                    
+                    <p:column headerText="Nro Contrato" styleClass="col_codigo">
+                        <h:outputText value="#{comodato.id}" />                        
+                    </p:column>
+                    <p:column headerText="Cliente" styleClass="col_codigo">
+                        <h:outputText value="#{comodato.cliente.nome}" />                        
+                    </p:column>
+                    <p:column headerText="Data Emissão" styleClass="col_codigo">
+                        <h:outputText value="#{comodato.dataContrato}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Data Vencimento" styleClass="col_codigo">
+                        <h:outputText value="#{comodato.dataVencimento}" >                                                    
+                            <f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"/>
+                        </h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Ações" styleClass="col_opcoes">
+                        <p:commandButton style="margin-right:20px;" icon="fa fa-fw fa-edit" title="Editar" 
+                                         action="#{comodatoMBean.botaoEditarComodato}">
+                            <f:setPropertyActionListener value="#{comodato}" target="#{comodatoMBean.comodato}"/>
+                        </p:commandButton>                        
+                        <p:commandButton id="cBtnExcluir" action="#{comodatoMBean.botaoExcluirComodato}" 
+                                         icon="fa fa-fw fa-remove"   title="Excluir">                           
+                            <f:setPropertyActionListener value="#{comodato}" target="#{comodatoMBean.comodato}"/>
+                            <p:confirm header="Confirmar a Exclusão" message="Tem certeza que deseja remover o Produto do Contrato?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>   
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+            
+            <p:confirmDialog  global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+            </p:confirmDialog>
+            
+        </h:form>
+    </ui:define>
+
+</ui:composition>

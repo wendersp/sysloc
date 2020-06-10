@@ -29,8 +29,8 @@ public class LogarMBean {
 
     public String logar() {
         try {
-//            this.userName = "antonio";
-//            this.senha = "";
+            this.userName = "antonio";
+            this.senha = "";
                     
             this.usuarioLogado = usuairoSessionBean.logar(userName, senha);
             if (this.usuarioLogado != null) {

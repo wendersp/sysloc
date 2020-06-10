@@ -5,6 +5,7 @@ import sysloc.entidades.Usuario;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import sysloc.controler.uteis.Pagina;
 
 /**
  *
@@ -28,6 +29,10 @@ public class MenuMBean {
        isMenuUsuario = false;
    }
    
+   public String menuHome() {
+       return Pagina.HOME;
+   }
+   
    public String menuUsuario() {      
        return "consUsuario?faces-redirect=true";      
    }
@@ -35,6 +40,11 @@ public class MenuMBean {
    public String menuCidade() {
        return "consCidade?faces-redirect=true";       
    }
+   
+   public String menuCliente() {
+       return Pagina.CLIENTE_CONS;       
+   }
+   
    
    public String menuGrupo() {
        return "consGrupo?faces-redirect=true";       
@@ -50,6 +60,10 @@ public class MenuMBean {
    
    public String menuProduto() {
        return "consProduto?faces-redirect=true";       
+   }
+   
+    public String menuContratoComodato() {
+       return Pagina.COMODATO_CONS;       
    }
    
     public String menuPerfilUsuario() {

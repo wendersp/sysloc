@@ -11,8 +11,12 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import sysloc.controler.converter.CidadeConverter;
+import sysloc.controler.uteis.Pagina;
 import sysloc.controler.uteis.UteisJsf;
 import sysloc.sessionbean.CidadeSessionBean;
 import sysloc.sessionbean.ClienteSessionBean;
@@ -34,9 +38,11 @@ public class ClienteMBean implements Serializable {
 
     private List<Cliente> listaClientes;
 
-    private List<Cidade> listaCidades;   
-    
+    private List<Cidade> listaCidades;
+
     private String valorPesquisar;
+
+    private CidadeConverter cidadeConverter;
 
     public ClienteMBean() {
 
@@ -49,16 +55,30 @@ public class ClienteMBean implements Serializable {
 
     private void inicializarFormCadastro() {
         try {
-        this.listaCidades = this.cidadeSBean.pesquisar("");        
+            this.cidadeConverter = new CidadeConverter();
+            this.cidadeConverter.setCidadeSessionBean(cidadeSBean);
         } catch (Exception ex) {
-            UteisJsf.addMensagemErro("Erro ao listar cidade. " + ex.getMessage());
+            UteisJsf.addMensagemErro(ex.getMessage());
         }
+    }
+
+    public List<Cidade> pesquisarCidadeAutoComplete(String nomeCidade) {
+        try {
+            return this.cidadeSBean.pesquisar(nomeCidade);
+        } catch (Exception ex) {
+            UteisJsf.addMensagemErro(ex.getMessage());
+        }
+        return null;
     }
 
     public String botaoNovo() {
         this.inicializarFormCadastro();
         this.cliente = new Cliente();
-        return "cadCliente?faces-redirect=true";
+        return Pagina.CLIENTE_FRM;
+    }
+    
+    public String botaoNavPesquisar() {
+        return Pagina.CLIENTE_CONS;
     }
 
     public void botaoSalvar() {
@@ -67,7 +87,11 @@ public class ClienteMBean implements Serializable {
     }
 
     public void botaoPesquisar() {
+        try {
         this.listaClientes = this.clienteSBean.pesquisar(valorPesquisar);
+        } catch(Exception ex) {
+            UteisJsf.addMensagemErro(ex.getMessage());
+        }
     }
 
     public void botaoExcluir() {
@@ -76,7 +100,7 @@ public class ClienteMBean implements Serializable {
 
     public String botaoEditar() {
         this.inicializarFormCadastro();
-        return "cadCliente?faces-redirect=true";
+        return Pagina.CLIENTE_FRM;
     }
 
     public Cliente getCliente() {
@@ -111,8 +135,13 @@ public class ClienteMBean implements Serializable {
         this.valorPesquisar = valorPesquisar;
     }
 
+    public CidadeConverter getCidadeConverter() {
+        return cidadeConverter;
+    }
 
+    public void setCidadeConverter(CidadeConverter cidadeConverter) {
+        this.cidadeConverter = cidadeConverter;
+    }
 
-   
-
+    
 }

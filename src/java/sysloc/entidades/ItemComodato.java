@@ -20,7 +20,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "itens_comodato", schema = "sysloc")
-public class ItensComodato implements Serializable {
+public class ItemComodato implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,15 +32,27 @@ public class ItensComodato implements Serializable {
     @JoinColumn(name = "produto_id")
     private Produto produto;
     @Column(name = "quantidade")
-    private Double quantidade;
+    private Double quantidade = 1.0;
     @Column(name = "valor")
     private Double valor;
+    @Column(name = "valor_total")
+    private Double valorTotal;
     @Column(name = "numero_serie", length = 20)
     private String numeroSerie;
     @Column(name = "patrimonio", length = 20)
     private String patrimonio;
     @Column(name = "observacao", length = 255)
     private String observacao;
+
+    public ItemComodato() {
+
+    }
+
+    public void calcularValotTotal() {
+        if (this.quantidade != null && this.valor != null && this.quantidade > 0 && this.valor > 0) {
+            this.valorTotal = this.quantidade * this.valor;
+        }
+    }
 
     public Comodato getComodato() {
         return comodato;
@@ -56,6 +68,7 @@ public class ItensComodato implements Serializable {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+        this.valor = produto.getValor();
     }
 
     public Double getQuantidade() {
@@ -72,6 +85,14 @@ public class ItensComodato implements Serializable {
 
     public void setValor(Double valor) {
         this.valor = valor;
+    }
+
+    public Double getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(Double valorTotal) {
+        this.valorTotal = valorTotal;
     }
 
     public String getNumeroSerie() {
@@ -117,7 +138,7 @@ public class ItensComodato implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ItensComodato other = (ItensComodato) obj;
+        final ItemComodato other = (ItemComodato) obj;
         if (!Objects.equals(this.comodato, other.comodato)) {
             return false;
         }
@@ -126,11 +147,5 @@ public class ItensComodato implements Serializable {
         }
         return true;
     }
-    
-    
-    
-    
-    
-    
-    
+
 }
